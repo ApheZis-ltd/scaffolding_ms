@@ -7,6 +7,7 @@ use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use App\Models\Maneuver;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -57,7 +58,7 @@ class ManeuversRelationManager extends RelationManager
                     ->weight('bold')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('quantity')
-                    ->numeric()
+                    ->formatStateUsing(fn ($state) => number_format((float)$state, 0))
                     ->sortable()
                     ->fontFamily('mono'),
                 Tables\Columns\TextColumn::make('type')

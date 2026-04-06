@@ -74,7 +74,7 @@ class InFlightOrderResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('qty')
                     ->label('Qty')
-                    ->numeric()
+                    ->formatStateUsing(fn ($state) => number_format((float)$state, 0))
                     ->fontFamily('mono')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
@@ -86,14 +86,14 @@ class InFlightOrderResource extends Resource
                         default => 'gray',
                     }),
                 Tables\Columns\TextColumn::make('pricing')
-                    ->money('USD')
+                    ->formatStateUsing(fn ($state) => '$' . number_format((float)$state, 2))
                     ->fontFamily('mono')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('site_details')
                     ->limit(30)
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->formatStateUsing(fn ($state) => $state ? $state->format('Y-m-d H:i') : '-')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

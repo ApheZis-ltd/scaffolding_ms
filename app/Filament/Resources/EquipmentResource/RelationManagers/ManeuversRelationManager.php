@@ -55,7 +55,7 @@ class ManeuversRelationManager extends RelationManager
             ->columns([
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Date')
-                    ->dateTime('M d, Y H:i')
+                    ->formatStateUsing(fn ($state) => $state ? $state->format('M d, Y H:i') : '-')
                     ->fontFamily('mono')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('leaseContract.contact.name')
@@ -63,7 +63,7 @@ class ManeuversRelationManager extends RelationManager
                     ->weight('bold')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('quantity')
-                    ->numeric()
+                    ->formatStateUsing(fn ($state) => number_format((float)$state, 0))
                     ->fontFamily('mono')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('type')

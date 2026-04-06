@@ -64,11 +64,11 @@ class ContactResource extends Resource
                     })
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->formatStateUsing(fn ($state) => $state ? $state->format('Y-m-d H:i') : '-')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->formatStateUsing(fn ($state) => $state ? $state->format('Y-m-d H:i') : '-')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

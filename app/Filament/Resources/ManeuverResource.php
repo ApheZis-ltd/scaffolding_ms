@@ -44,24 +44,34 @@ class ManeuverResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('leaseContract.id')
-                    ->numeric()
+                    ->label('Lease ID')
+                    ->formatStateUsing(fn ($state) => $state)
                     ->sortable(),
                 Tables\Columns\TextColumn::make('equipment.name')
-                    ->numeric()
+                    ->weight('bold')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('quantity')
-                    ->numeric()
+                    ->formatStateUsing(fn ($state) => number_format((float)$state, 0))
+                    ->fontFamily('mono')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('type')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('status')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'complete' => 'success',
+                        'returned' => 'info',
+                        'flagged_review' => 'warning',
+                        default => 'gray',
+                    })
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->formatStateUsing(fn ($state) => $state ? $state->format('Y-m-d H:i') : '-')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->formatStateUsing(fn ($state) => $state ? $state->format('Y-m-d H:i') : '-')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
