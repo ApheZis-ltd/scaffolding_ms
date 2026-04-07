@@ -7,6 +7,42 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## Project
+
+This repository is a Laravel 11 app with a Vite (Tailwind) frontend and Filament admin (`filament/filament`).
+
+## Local setup
+
+- **Install backend deps**: `composer install`
+- **Install frontend deps**: `npm install`
+- **Configure env**:
+  - `cp .env.example .env`
+  - `php artisan key:generate`
+- **Database** (default is SQLite):
+  - `touch database/database.sqlite`
+  - `php artisan migrate`
+
+## Run (dev)
+
+- **All-in-one** (app server + queue listener + logs + Vite): `composer run dev`
+
+## Admin dashboard overview
+
+The Filament admin dashboard includes an overview widget with platform statistics:
+
+- Orders (pending / shipped / delivered)
+- Sales totals (invoices) + maintenance fees
+- Outstanding balance
+- Leases (active / pending review / closed)
+- Damages + flagged maneuvers
+- Inventory totals (items, total stock, available stock)
+- Procurements (total / pending)
+
+## Tests
+
+- **PHP**: `php artisan test` (or `./vendor/bin/phpunit`)
+- **Frontend build sanity check**: `npm run build`
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
