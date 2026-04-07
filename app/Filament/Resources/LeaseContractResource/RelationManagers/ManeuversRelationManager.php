@@ -102,7 +102,7 @@ class ManeuversRelationManager extends RelationManager
                         Forms\Components\TextInput::make('maintenance_cost')
                             ->label('Maintenance Cost')
                             ->numeric()
-                            ->prefix('$')
+                            ->prefix(env('APP_CURRENCY', 'RWF'))
                             ->visible(fn (Forms\Get $get) => $get('maintenance_required'))
                             ->required(fn (Forms\Get $get) => $get('maintenance_required')),
                     ])

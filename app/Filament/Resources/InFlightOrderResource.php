@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\InFlightOrderResource\Pages;
 use App\Filament\Resources\InFlightOrderResource\RelationManagers;
 use App\Models\InFlightOrder;
+use App\Support\Money;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -44,7 +45,7 @@ class InFlightOrderResource extends Resource
                             ->label('Unit Pricing')
                             ->required()
                             ->numeric()
-                            ->prefix('$')
+                            ->prefix(env('APP_CURRENCY', 'RWF'))
                             ->extraInputAttributes(['class' => 'font-mono']),
                         Forms\Components\Select::make('status')
                             ->options([
@@ -86,7 +87,7 @@ class InFlightOrderResource extends Resource
                         default => 'gray',
                     }),
                 Tables\Columns\TextColumn::make('pricing')
-                    ->formatStateUsing(fn ($state) => '$' . number_format((float)$state, 2))
+                    ->formatStateUsing(fn ($state) => Money::format((float) $state, env('APP_CURRENCY', 'RWF')))
                     ->fontFamily('mono')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('site_details')

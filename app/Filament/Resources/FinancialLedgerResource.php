@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\FinancialLedgerResource\Pages;
 use App\Filament\Resources\FinancialLedgerResource\RelationManagers;
 use App\Models\FinancialLedger;
+use App\Support\Money;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -45,17 +46,17 @@ class FinancialLedgerResource extends Resource
                         Forms\Components\TextInput::make('total_value')
                             ->required()
                             ->numeric()
-                            ->prefix('$')
+                            ->prefix(env('APP_CURRENCY', 'RWF'))
                             ->extraInputAttributes(['class' => 'font-mono']),
                         Forms\Components\TextInput::make('deposits_paid')
                             ->required()
                             ->numeric()
-                            ->prefix('$')
+                            ->prefix(env('APP_CURRENCY', 'RWF'))
                             ->extraInputAttributes(['class' => 'font-mono']),
                         Forms\Components\TextInput::make('balance')
                             ->required()
                             ->numeric()
-                            ->prefix('$')
+                            ->prefix(env('APP_CURRENCY', 'RWF'))
                             ->extraInputAttributes(['class' => 'font-mono']),
                     ])->columns(3),
             ]);
@@ -77,11 +78,11 @@ class FinancialLedgerResource extends Resource
                         default => 'gray',
                     }),
                 Tables\Columns\TextColumn::make('total_value')
-                    ->formatStateUsing(fn ($state) => '$' . number_format((float)$state, 2))
+                    ->formatStateUsing(fn ($state) => Money::format((float) $state, env('APP_CURRENCY', 'RWF')))
                     ->fontFamily('mono')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('balance')
-                    ->formatStateUsing(fn ($state) => '$' . number_format((float)$state, 2))
+                    ->formatStateUsing(fn ($state) => Money::format((float) $state, env('APP_CURRENCY', 'RWF')))
                     ->fontFamily('mono')
                     ->weight('bold')
                     ->color(fn ($state): string => (float)$state > 0 ? 'danger' : 'success')
