@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('sku')->unique();
             $table->integer('total_stock')->default(0);
             $table->integer('available_stock')->default(0);
-            $table->jsonb('metadata')->nullable();
+            $table->json('metadata')->nullable();
             $table->timestamps();
         });
     }

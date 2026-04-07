@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('type'); // 'borrower', 'vendor'
-            $table->jsonb('contact_details')->nullable();
+            $table->json('contact_details')->nullable();
             $table->timestamps();
         });
     }
